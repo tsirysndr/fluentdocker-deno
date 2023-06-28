@@ -17,7 +17,7 @@ Deno.test(function dockerfileTest() {
     .onBuild("RUN npm install")
     .stopSignal("SIGINT")
     .shell(["/bin/zsh", "-c"])
-    .healthcheck("CMD curl --fail http://localhost:8080 || exit 1")
+    .healthcheck("curl --fail http://localhost:8080 || exit 1")
     .user("node")
     .expose(8080)
     .cmd("npm start");

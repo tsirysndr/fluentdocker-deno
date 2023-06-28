@@ -9,6 +9,11 @@ class Dockerfile extends DockerfileBase {
     this.steps = [];
   }
 
+  /**
+   * Add a step to the Dockerfile
+   * @param {Step} step
+   * @returns {Dockerfile} Dockerfile with added step
+   */
   withStep(step: Step) {
     this.steps.push(step);
     this.commands.push(`\n# ${step.name}`);
