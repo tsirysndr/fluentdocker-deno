@@ -246,24 +246,17 @@ class DockerfileBase {
     // build image
     const command = new Deno.Command("docker", {
       args: ["build", context, "-t", tag, "-f", "Dockerfile"],
-      stdout: "piped",
-      stderr: "piped",
+      stdout: "inherit",
+      stderr: "inherit",
     });
 
     const child = command.spawn();
 
     const status = await child.status;
 
-    const { stderr, stdout } = await child.output();
-
     if (!status.success) {
-      console.log(new TextDecoder().decode(stderr));
-      throw new Error("Failed to build image");
+      Deno.exit(1);
     }
-
-    console.log(new TextDecoder().decode(stdout));
-    console.log(new TextDecoder().decode(stderr));
-    console.log(`Successfully built image ${tag}`);
 
     return this;
   }
